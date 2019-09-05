@@ -1,3 +1,4 @@
+from datetime import datetime
 import pickle
 import sys
 import numpy as np
@@ -129,6 +130,7 @@ def getFeaturesLabels(db_path):
     # data_table format: [( TaskSet.Set_ID, TaskSet.TASK1_ID, TaskSet.TASK2_ID, TaskSet.TASK3_ID, Job.Task_ID, Job.Exit_Value, TaskSet.Successful)]
     data_table = db_cursor.fetchall()
     print('reading taskset_jobs join done')
+    print('The current time is:',datetime.now())
     finalFeatureList = []
     finalLabelList = []
     currentTset = data_table[0][0] # first taskset id
@@ -164,9 +166,12 @@ print('example task 222:',TASKS_DICT[222])
 
 features, labels = getFeaturesLabels(DB_PATH)
 
+
+print('The current time is:',datetime.now())
+
 print("Done reading")
-
-
+  
+ 
 '''
 
 
@@ -314,4 +319,4 @@ with open ( '56_features', 'wb' ) as outfile:  # 'wb' is the file mode, it means
 with open ( '56_labels', 'wb' ) as outfile:
     pickle.dump(labels, outfile)
 
-
+print('The current time is:',datetime.now())
