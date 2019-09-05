@@ -33,7 +33,8 @@ Exit_Values = {
         'EXIT_CRITICAL' : 0,
         'EXIT_PERIOD' : 2,
         'OUT_OF_CAPS' : 3,
-        'OUT_OF_QUOTA' : 4
+        'OUT_OF_QUOTA' : 4,
+        'EXIT_ERROR' : 5
         }
 
 # ARG values ranged from 1 to 205.891.132.094.649, these values were normalized and scaled # to range from 1 to 17
@@ -97,23 +98,21 @@ def getTaskFeatures(db_path): #c is the cursor for the db
 
 def processTaskset(tasksetData):
     # tasksetData is a list of tuples returned from the DB in getTasksetData()
-    try:
-        label = tasksetData[0][-1]
-        features = []
-        jobExitsByTask = {}
-        for tsData in tasksetData:
+    label = tasksetData[0][-1]
+    features = []
+    jobExitsByTask = {}
+    for tsData in tasksetData:
+        try:
+            jobExitsByTask[tsData[4]].append(Exit_Values[tsData[5]])
+        except KeyError:
+            jobExitsByTask[tsData[4]] = [Exit_Values[tsData[5]]]
+    for taskIdNo in (1,2,3):
+        if tasksetData[0][taskIdNo] != -1:
+            features += TASKS_DICT[tasksetData[0][taskIdNo]]
             try:
-                jobExitsByTask[tsData[4]].append(Exit_Values[tsData[5]])
-            except KeyError:
-                jobExitsByTask[tsData[4]] = [Exit_Values[tsData[5]]]
-        for taskIdNo in (1,2,3):
-            if tasksetData[0][taskIdNo] != -1:
-                features += TASKS_DICT[tasksetData[0][taskIdNo]]
                 features += jobExitsByTask[tasksetData[0][taskIdNo]]
-    except KeyError as k:
-        for t in tasksetData:
-            print(t)
-        raise k
+            except KeyError:
+                features += [Exit_Values['EXIT_ERROR']]
     return np.array(features), label
 
 
