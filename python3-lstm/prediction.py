@@ -1,7 +1,4 @@
-import pickle
 import numpy as np
-import pandas as pd
-from tqdm import tqdm
 from keras.preprocessing.sequence import pad_sequences
 from keras.models import load_model
 import csv
@@ -155,10 +152,7 @@ print('The current time is:', datetime.now())
 
 print("Done reading")
 
-
-
-
-labels = np.array(labels) #  to save the labels list as numpy array
+labels = np.array(labels)  # to save the labels list as numpy array
 
 # To make a fixed length vector, if the vector is smaller than 56 then replace the empty values with -1. if longer than 56 trim the value
 features = pad_sequences(features, maxlen=56, value=-1, padding='post', truncating='post')
