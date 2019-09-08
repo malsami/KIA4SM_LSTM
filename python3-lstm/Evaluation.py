@@ -58,8 +58,8 @@ cm_df = pd.DataFrame ( cm,
 
 plt.figure ( figsize=(5.5, 4) )
 sns.heatmap ( cm_df, annot=True, fmt='g' )
-plt.title ( 'Confusoin Matrix \n Accuracy:{0:.3f}'.format ( accuracy_score ( yt, yp ) ) )
+plt.title ( 'Confusion Matrix \n Accuracy:{0:.3f}'.format ( accuracy_score ( yt, yp ) ) )
 plt.ylabel ( 'True label' )
 plt.xlabel ( 'Predicted label' )
 plt.show ()
-plt.savefig ( 'Confusoin_Matrix.png' )
+plt.savefig ( 'Confusion_Matrix.png' )
