@@ -4,6 +4,9 @@ import numpy as np
 from keras.preprocessing.sequence import pad_sequences
 import sqlite3
 
+debug = False
+
+
 # PKG has a fixed set of labels. Integer encoding is used where integer # value is assigned to each label
 PKGs = {
         'pi' : 0,
@@ -44,9 +47,10 @@ Arg_Values = {
         }
 
 
-print("Doing writing")
+if debug:
+    print("Doing writing")
 
-DB_PATH = "/home/bernhard/panda_v4.db"
+DB_PATH = sys.argv[1]
 TASKS_DICT = {}
 
 def taskToFeatureList(task):
@@ -135,7 +139,7 @@ def getFeaturesLabels(db_path):
             tSetJobs = []
             currentTset = row[0]
             tSetJobs.append(row)
-    # proess last taskset
+    # process last taskset
     features, label = processTaskset(tSetJobs)
     finalFeatureList.append(features)
     finalLabelList.append(label)
@@ -160,8 +164,9 @@ labels = np.array(labels) #  to save the labels list as numpy array
 # To make a fixed length vector, if the vector is smaller than 56 then replace the empty values with -1. if longer than 56 trim the value
 features = pad_sequences(features, maxlen=56, value=-1, padding='post', truncating='post')
 
-#print(features.shape) # the dimensionality of features
-#print(labels.shape) # the dimensionality of labels
+if debug:
+    print(features.shape) # the dimensionality of features
+    print(labels.shape) # the dimensionality of labels
 
 #  save both files for the training
 with open ( '56_features', 'wb' ) as outfile:  # 'wb' is the file mode, it means 'write binary'
