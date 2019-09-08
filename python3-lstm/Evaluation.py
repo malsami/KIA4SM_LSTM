@@ -30,7 +30,7 @@ for val in y:
 y = np.array ( newy )
 print ( count )
 
-X_train, X_test, y_train, y_test = train_test_split ( X, y, test_size=0.3 )
+X_train, X_test, y_train, y_test = train_test_split ( X, y, test_size=0.3, random_state=42)
 print ( X_train.shape )
 
 model = load_model ( 'My_LSTM_Model.h5' )  # loading saved model

@@ -39,7 +39,7 @@ y = np.array ( newy )
 # print ( count )
 
 # devide data into training and test sets
-X_train, X_test, y_train, y_test = train_test_split ( X, y, test_size=0.3 )
+X_train, X_test, y_train, y_test = train_test_split ( X, y, test_size=0.3 ,random_state=42)
 # print ( X_train.shape )
 
 # LSTM input is fifty-six time-steps and one feature at each time-step is represented by the notation: (56,1).
