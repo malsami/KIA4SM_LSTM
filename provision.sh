@@ -10,5 +10,8 @@
 ######################
 
 sudo apt update -qq
+
 sudo apt install python3.5 python3-pip tmux -qq
 
+sudo apt install python3-venv
+#pip3 install --user virtualenv

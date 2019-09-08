@@ -10,3 +10,6 @@
 # Contributor: Bernhard Blieninger
 ##############################
 
+python3 -m venv lstm-virtenv
+source lstm-virtenv/bin/activate
+pip3 install  -r python3-lstm/requirements.txt
