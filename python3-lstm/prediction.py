@@ -19,7 +19,7 @@ arr = []
 for i in range(len(labels)):
     l = labels[i]
     p = np.argmax(preds[i])
-    print ( "the actual value is{0}and the predicted value is {1}".format(l, p))
+    print ( "the actual value is {0} and the predicted value is {1}".format(l, p))
     arr.append([i + 1, l, p])
 
 csvfile = "Predicion_results.csv"
