@@ -1,4 +1,6 @@
-from datetime import datetime
+
+import warnings
+warnings.filterwarnings('ignore',category=FutureWarning)
 import pickle
 import sys
 import numpy as np
@@ -118,16 +120,13 @@ def getFeaturesLabels(db_path):
     db_cursor.execute(command)
     # data_table format: [( TaskSet.Set_ID, TaskSet.TASK1_ID, TaskSet.TASK2_ID, TaskSet.TASK3_ID, Job.Task_ID, Job.Exit_Value, TaskSet.Successful)]
     data_table = db_cursor.fetchall()
-    print('reading taskset_jobs join done')
-    print('The current time is:',datetime.now())
+
     finalFeatureList = []
     finalLabelList = []
     currentTset = data_table[0][0] # first taskset id
     tSetJobs = []
     totalSize = len(data_table)
     for row in data_table:
-        if row[0] % 1000 == 0:
-            print('processed',int(100 * (row[0]/totalSize)),'%' )
         if row[0] == currentTset:
             #then still same setTset
             tSetJobs.append(row)
@@ -149,21 +148,18 @@ def getFeaturesLabels(db_path):
 
 
 TASKS_DICT = getTaskFeatures(DB_PATH)
-print('Tasks have been added to TASKS_DICT')
-print('length of taskdict: ', len(TASKS_DICT))
-print('example task 222:',TASKS_DICT[222])
+
+if debug:
+    print('Tasks have been added to TASKS_DICT')
+    print('length of taskdict: ', len(TASKS_DICT))
+    print('example task 222:',TASKS_DICT[222])
 
 features, labels = getFeaturesLabels(DB_PATH)
 
-
-print('The current time is:',datetime.now())
-
-print("Done reading")
-  
 labels = np.array(labels) #  to save the labels list as numpy array
 
 # To make a fixed length vector, if the vector is smaller than 56 then replace the empty values with -1. if longer than 56 trim the value
-features = pad_sequences(features, maxlen=56, value=-1, padding='post', truncating='post')
+features = pad_sequences(features, maxlen=42, value=-1, padding='post', truncating='post')
 
 if debug:
     print(features.shape) # the dimensionality of features
@@ -172,9 +168,9 @@ if debug:
     input()
 
 #  save both files for the training
-with open ( '56_features', 'wb' ) as outfile:  # 'wb' is the file mode, it means 'write binary'
+with open ( '42_features', 'wb' ) as outfile:  # 'wb' is the file mode, it means 'write binary'
     pickle.dump(features, outfile)
 
-with open ( '56_labels', 'wb' ) as outfile:
+with open ( '42_labels', 'wb' ) as outfile:
     pickle.dump(labels, outfile)
 

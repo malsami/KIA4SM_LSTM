@@ -10,6 +10,11 @@ from keras.models import Model
 from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 
+
+#ignore deprecation warnings to get a better and cleaner output
+import tensorflow.python.util.deprecation as deprecation
+deprecation._PRINT_DEPRECATION_WARNINGS = False
+
 name = "logname-{}".format ( int ( time.time () ) )
 
 # both metrics and early stopping conditions are defined here and then saved in the log42 file

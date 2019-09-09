@@ -3,13 +3,11 @@ import pickle
 from keras.models import load_model
 import csv
 
-with open ( '56_features', 'wb' ) as outfile:  # 'wb' is the file mode, it means 'write binary'
-    #pickle.load(outfile features, outfile)
-    features = pickle.load(outfile, *, fix_imports=True, encoding="ASCII", errors="strict")
+with open ( '42_features', 'rb' ) as outfile:  # 'wb' is the file mode, it means 'write binary'
+    features = pickle.load(outfile, fix_imports=True)
 
-with open ( '56_labels', 'wb' ) as outfile:
-    labels = pickle.load(outfile, *, fix_imports=True, encoding="ASCII", errors="strict")
-    #pickle.dump(labels, outfile)
+with open ( '42_labels', 'rb' ) as outfile:
+    labels = pickle.load(outfile, fix_imports=True)
 
 model = load_model('My_LSTM_Model.h5')
 X = np.expand_dims(features, axis=2)
