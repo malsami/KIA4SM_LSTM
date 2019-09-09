@@ -1,5 +1,6 @@
 from datetime import datetime
 import pickle
+import sys
 import numpy as np
 from keras.preprocessing.sequence import pad_sequences
 import sqlite3
@@ -166,7 +167,9 @@ features = pad_sequences(features, maxlen=56, value=-1, padding='post', truncati
 
 if debug:
     print(features.shape) # the dimensionality of features
+    input()
     print(labels.shape) # the dimensionality of labels
+    input()
 
 #  save both files for the training
 with open ( '56_features', 'wb' ) as outfile:  # 'wb' is the file mode, it means 'write binary'
