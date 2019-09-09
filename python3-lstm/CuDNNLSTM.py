@@ -1,5 +1,10 @@
 import pickle
 import time
+import warnings
+warnings.filterwarnings('ignore',category=FutureWarning)
+#ignore deprecation warnings to get a better and cleaner output
+from tensorflow.python.util import deprecation
+deprecation._PRINT_DEPRECATION_WARNINGS = False
 import tensorflow as tf
 import numpy as np
 from keras.callbacks import TensorBoard
@@ -11,9 +16,6 @@ from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 
 
-#ignore deprecation warnings to get a better and cleaner output
-import tensorflow.python.util.deprecation as deprecation
-deprecation._PRINT_DEPRECATION_WARNINGS = False
 
 name = "logname-{}".format ( int ( time.time () ) )
 
@@ -48,7 +50,7 @@ X_train, X_test, y_train, y_test = train_test_split ( X, y, test_size=0.3 ,rando
 # print ( X_train.shape )
 
 # LSTM input is fifty-six time-steps and one feature at each time-step is represented by the notation: (56,1).
-input = Input ( shape=(56, 1) )
+input = Input ( shape=(42, 1) )
 
 # the first LSTM layer has 64 cells, the number must be equal/bigger than the input size. If you are using a CPU then change CuDNNLSTM to LSTM
 lstm = CuDNNLSTM ( 64, return_sequences=True ) ( input )  # Return_sequences is set true because the first LSTM has to return a sequence, which then can be fed into the 2nd LSTM
