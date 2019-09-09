@@ -23,9 +23,9 @@ tensorboard = TensorBoard ( log_dir="logs42/{}".format ( name ), write_graph=Tru
 es = EarlyStopping ( monitor='val_loss', mode='min', verbose=1 )  # define early stopping criteria
 
 # Importing the the extracted features and labels
-with open ( '56_features', 'rb' ) as fp:
+with open ( '42_features', 'rb' ) as fp:
     X = pickle.load ( fp )
-with open ( '56_labels', 'rb' ) as fp:
+with open ( '42_labels', 'rb' ) as fp:
     y = pickle.load ( fp )
 
 # LSTM’s input shape argument expects a three-dimensional array as an input in this order: Samples, timestamps and features. This is why we need to add another dimention to the numpy array.
