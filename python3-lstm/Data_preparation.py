@@ -4,9 +4,6 @@ import sys
 import numpy as np
 from keras.preprocessing.sequence import pad_sequences
 import sqlite3
-import timeit
-
-start = timeit.default_timer()
 
 debug = False
 
@@ -181,7 +178,3 @@ with open ( '56_features', 'wb' ) as outfile:  # 'wb' is the file mode, it means
 with open ( '56_labels', 'wb' ) as outfile:
     pickle.dump(labels, outfile)
 
-
-stop = timeit.default_timer()
-
-print('Time elapsed: ', stop - start)
