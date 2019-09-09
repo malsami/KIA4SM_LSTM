@@ -24,7 +24,7 @@ The first step is to preprocess the data. The database was imported and transfor
     5. Task Critical time: Integer
     6. Number of Jobs: Integer
 From Jobs only one feature was selected: Job Exit_Value: String.
-After exporting all tables, start with Data_preparation.py. Line 165 is responsible for the length of the feature vector. 
+After exporting all tables, start with Data_preparation.py.
 Feature and labels are save in the end. 
 
 
@@ -35,7 +35,7 @@ CuDNNLSTM.py. When using CPU, install Tensorflow and replace CuDNNLSTM with LSTM
 Evaluation.py. Evaluation prints the confusion matrix and classification report. Tensorboard can be launched by typing tensorboard -–logdir=logs/ into the terminal and logs from trained models can be visualized 
 
 **4. Prediction:**
-predictin.py. A CSV file will be save with actual and predictied values. The trained model should be loaded first.
+prediction.py. A CSV file will be save with actual and predicted values. The trained model should be loaded first.
 
 **5. Plotting:**
 Plotting.py. Another way to visualize the model built.
