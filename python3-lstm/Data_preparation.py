@@ -1,4 +1,3 @@
-
 import warnings
 warnings.filterwarnings('ignore',category=FutureWarning)
 import pickle
@@ -6,6 +5,7 @@ import sys
 import numpy as np
 from keras.preprocessing.sequence import pad_sequences
 import sqlite3
+import sklearn
 
 debug = False
 
@@ -60,11 +60,17 @@ def taskToFeatureList(task):
     #returns a fature list for the corresponding task values
     feature = []
     feature.append(task['Priority'])
-    feature.append(task['Period'])
+    #feature.append(task['Period'])
+    feature.append(task['AVG_RUNTIME'])
     feature.append(task['Number_of_Jobs'])
     feature.append(task['PKG'])
     feature.append(task['Arg'])
-    feature.append(task['CRITICALTIME'])
+    #feature.append(task['CRITICALTIME'])
+    feature.append(task['MAX_RUNTIME'])
+
+    # Edited
+    feature = sklearn.preprocessing.MinMaxScaler(feature_range=(0, 1)).fit_transform(feature)
+
     return feature
 
 
@@ -74,17 +80,19 @@ def getTaskFeatures(db_path): #c is the cursor for the db
     conn = sqlite3.connect(db_path)
     conn.row_factory = lambda C, R: { c[0]: R[i] for i, c in enumerate(C.description) }
     db_cursor  = conn.cursor()
-    db_cursor.execute('select Task_ID,Priority,Period,PKG,Arg,CRITICALTIME,Number_of_Jobs from Task')
+    db_cursor.execute('select Task_ID,Priority,Period,PKG,Arg,CRITICALTIME,MAX_RUNTIME,AVG_RUNTIME,Number_of_Jobs from Task')
     outputTable  = db_cursor.fetchall()
 
     tasks_dict = {}
     for row in outputTable:
+
         row['Period'] = int(row['Period']/1000)
         row['Number_of_Jobs'] = int(row['Number_of_Jobs'])
         row['PKG'] = PKGs[row['PKG']]
         row['CRITICALTIME'] = int(row['CRITICALTIME']/1000)
         row['Arg'] = Arg_Values[row['Arg']]
         tasks_dict[row['Task_ID']] = taskToFeatureList(row)
+
     return tasks_dict
 
 
