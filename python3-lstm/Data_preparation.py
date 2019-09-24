@@ -5,7 +5,6 @@ import sys
 import numpy as np
 from keras.preprocessing.sequence import pad_sequences
 import sqlite3
-import sklearn
 
 debug = False
 
@@ -57,19 +56,16 @@ DB_PATH = sys.argv[1]
 TASKS_DICT = {}
 
 def taskToFeatureList(task):
-    #returns a fature list for the corresponding task values
+
+    #returns a feature list for the corresponding task values
     feature = []
+
     feature.append(task['Priority'])
-    #feature.append(task['Period'])
     feature.append(task['AVG_RUNTIME'])
     feature.append(task['Number_of_Jobs'])
     feature.append(task['PKG'])
     feature.append(task['Arg'])
-    #feature.append(task['CRITICALTIME'])
     feature.append(task['MAX_RUNTIME'])
-
-    # Edited
-    feature = sklearn.preprocessing.MinMaxScaler(feature_range=(0, 1)).fit_transform(feature)
 
     return feature
 

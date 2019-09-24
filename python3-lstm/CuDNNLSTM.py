@@ -14,7 +14,7 @@ from keras.layers import LSTM, CuDNNLSTM
 from keras.models import Model
 from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
-
+from sklearn import preprocessing
 
 
 name = "logname-{}".format ( int ( time.time () ) )
@@ -31,6 +31,7 @@ with open ( '42_labels', 'rb' ) as fp:
     y = pickle.load ( fp )
 
 # LSTM’s input shape argument expects a three-dimensional array as an input in this order: Samples, timestamps and features. This is why we need to add another dimention to the numpy array.
+X = preprocessing.MinMaxScaler(feature_range=(0, 1)).fit_transform(X)
 X = np.expand_dims ( X, axis=2 )
 newy = []
 count = 0

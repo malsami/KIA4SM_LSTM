@@ -11,12 +11,15 @@ import numpy as np
 from keras.models import load_model
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
+from sklearn import preprocessing
 
 with open ( '42_features', 'rb' ) as fp:
     X = pickle.load ( fp )
 with open ( '42_labels', 'rb' ) as fp:
     y = pickle.load ( fp )
 
+
+X = preprocessing.MinMaxScaler(feature_range=(0, 1)).fit_transform(X)
 X = np.expand_dims ( X, axis=2 )
 newy = []
 count = 0
